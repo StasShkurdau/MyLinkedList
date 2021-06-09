@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.function.Function;
+import static java.util.Objects.*;
+
 
 public class LinkedList<T> implements List<T> {
 
@@ -12,7 +14,9 @@ public class LinkedList<T> implements List<T> {
     private Node tail;
     private int counter = 0;
 
+
     public class Node {
+
         private T data;
         private Node next;
         private Node previous;
@@ -24,6 +28,7 @@ public class LinkedList<T> implements List<T> {
         }
 
     }
+
     public class MyIterator implements Iterator<T>{
 
         private int currentPosition = 0;
@@ -36,14 +41,12 @@ public class LinkedList<T> implements List<T> {
         }
 
         public boolean hasNext() {
-            if(currentNode.next == null) {
-                return false;
-            }
-            return true;
+            return nonNull(currentNode.next);
         }
 
         public T next() {
             currentNode = currentNode.next;
+            counter++;
             return currentNode.data;
         }
 
@@ -55,18 +58,15 @@ public class LinkedList<T> implements List<T> {
 
     }
     public class MyListIterator implements ListIterator<T>{
-        public MyListIterator(LinkedList<T> linkedList, int index) throws IndexOutOfBoundsException {
-            if(index < 0 && linkedList.counter < index){
+
+        public MyListIterator(LinkedList<T> linkedList, int index){
+            if(index < 0 || linkedList.counter < index){
                 throw new IndexOutOfBoundsException();
             }
             this.listObject = linkedList;
             this.currentNode = listObject.head;
             this.currentPosition = index;
             Node link = linkedList.head;
-
-            if (linkedList.counter < index) {
-                return;
-            }
             for(int i = 1; i < index; i++) {
                 link = link.next;
             }
@@ -85,10 +85,7 @@ public class LinkedList<T> implements List<T> {
 
         @Override
         public boolean hasNext() {
-            if(currentNode.next == null) {
-                return false;
-            }
-            return true;
+            return nonNull(currentNode.next);
         }
 
         @Override
@@ -100,10 +97,7 @@ public class LinkedList<T> implements List<T> {
 
         @Override
         public boolean hasPrevious() {
-            if(currentNode.previous == null){
-                return false;
-            }
-            return true;
+            return nonNull(currentNode.previous);
         }
 
         @Override
@@ -144,7 +138,7 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean add(T data){
-        if(head == null && tail == null) {
+        if(isNull(head) && isNull(tail)) {
             Node newNode = new Node(data);
             head = newNode;
             tail = newNode;
@@ -166,21 +160,21 @@ public class LinkedList<T> implements List<T> {
         return indexNode;
     }
 
-    private void relinkBefore(Node targetNode, Node newNode) {
+    private void relinkBefore(Node targetNode, Node newNode){
         newNode.next = targetNode;
         newNode.previous = targetNode.previous;
         targetNode.previous = newNode;
-        if (newNode.previous != null) {
+        if (nonNull(newNode.previous)) {
             newNode.previous.next = newNode;
         }
     }
 
     @Override
-    public void add(int index, T data) throws IndexOutOfBoundsException {
-        if (index <= 0 || index > counter) {
+    public void add(int index, T data){
+        if (index <= 0 || counter < index) {
             throw new IndexOutOfBoundsException();
         }
-        if (head == null && tail == null) {
+        if (isNull(head) && isNull(tail)) {
             Node newNode = new Node(data);
             head = newNode;
             tail = newNode;
@@ -201,11 +195,10 @@ public class LinkedList<T> implements List<T> {
         for (T index:data) {
             add(index);
         }
-
     }
 
     public boolean addAll(Collection collection) throws NullPointerException{
-        if(collection == null){
+        if(isNull(collection)){
             throw new NullPointerException();
         }
         T collectionToArray[] = (T[]) collection.toArray();
@@ -216,11 +209,11 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean addAll(int index, Collection collection) throws IndexOutOfBoundsException, NullPointerException {
-        if (index <= 0 || index > counter) {
+    public boolean addAll(int index, Collection collection) throws NullPointerException {
+        if (index <= 0 || counter < index) {
             throw new IndexOutOfBoundsException();
         }
-        if(collection == null){
+        if(isNull(collection)){
             throw new NullPointerException();
         }
         T collectionToArray[] = (T[]) collection.toArray();
@@ -235,7 +228,6 @@ public class LinkedList<T> implements List<T> {
         head = null;
         tail = null;
         counter = 0;
-
     }
 
     @Override
@@ -251,11 +243,7 @@ public class LinkedList<T> implements List<T> {
             }
             indexInLinkedList++;
         }
-
-        if(0 < counterOfChanges){
-            return true;
-        }
-        return false;
+        return 0 < counterOfChanges;
     }
 
     @Override
@@ -266,7 +254,6 @@ public class LinkedList<T> implements List<T> {
                 removeCounter++;
             }
         }
-
         return 0 < removeCounter;
     }
 
@@ -276,7 +263,6 @@ public class LinkedList<T> implements List<T> {
         head.previous = newNode;
         head = newNode;
         counter++;
-
     }
 
     public void addLast(T data){
@@ -288,7 +274,7 @@ public class LinkedList<T> implements List<T> {
     }
 
 
-    public T get(int index) throws IndexOutOfBoundsException{
+    public T get(int index){
         if(0 < index && index <= counter){
             Node newNode = getNodeByIndex(index);
             return newNode.data;
@@ -297,20 +283,21 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public T set(int index, T newData) throws IndexOutOfBoundsException {
+    public T set(int index, T newData) {
         T returnOldData = null;
-        if(index == 1){
+        if (index <= 0 || counter < index) {
+            throw new IndexOutOfBoundsException();
+        } else if (index == 1) {
             returnOldData = head.data;
             head.data = newData;
-        }else if(index <= counter) {
+        } else{
             Node targetNode = getNodeByIndex(index);
             returnOldData = targetNode.data;
             targetNode.data = newData;
-        }else if (index <= 0 || index > counter){
-            throw new IndexOutOfBoundsException();
         }
         return returnOldData;
     }
+
 
     public T setFirst(T newData){
         T returnOldData = head.data;
@@ -323,12 +310,10 @@ public class LinkedList<T> implements List<T> {
         return returnOldData;
     }
 
-
-
     @Override
-    public T remove(int indexOfElement) throws IndexOutOfBoundsException {
+    public T remove(int indexOfElement) {
         T returnData = null;
-        if (indexOfElement < 0 || indexOfElement > counter) {
+        if (indexOfElement <= 0 || indexOfElement > counter) {
             throw new IndexOutOfBoundsException();
         }
         if(indexOfElement == 1){
@@ -339,7 +324,7 @@ public class LinkedList<T> implements List<T> {
             returnData = targetNode.data;
             targetNode.previous.next = targetNode.next;
             targetNode.next.previous = targetNode.previous;
-        }else if(indexOfElement == counter){
+        }else{
             returnData = tail.data;
             tail = tail.previous;
         }
@@ -351,7 +336,7 @@ public class LinkedList<T> implements List<T> {
     public int lastIndexOf(Object comparisonObject) {
         Node previousLink = tail;
         for(int index = counter; index > 0; index--){
-            if(previousLink.data==comparisonObject){
+            if(previousLink.data == comparisonObject){
                 return index;
             }
             previousLink = previousLink.previous;
@@ -421,7 +406,6 @@ public class LinkedList<T> implements List<T> {
 
     public LinkedList clone(){
         LinkedList linkedListCopy = new LinkedList();
-        T copyData;
         for(int index = 1; index <= counter; index++){
             linkedListCopy.add(get(index));
         }
@@ -433,7 +417,7 @@ public class LinkedList<T> implements List<T> {
     }
 
     public boolean isEmpty() {
-        return head == null;
+        return isNull(head);
     }
 
     @Override
@@ -461,7 +445,6 @@ public class LinkedList<T> implements List<T> {
         }
         return arrayToReturn;
     }
-
 
     @Override
     public boolean remove(Object removeObject) {
@@ -508,7 +491,7 @@ public class LinkedList<T> implements List<T> {
     @Override
     public <T> T[] toArray(T[] obtainedArray) throws NullPointerException {
         T[] arrayToReturn;
-        if(obtainedArray==null){
+        if(isNull(obtainedArray)){
             throw new NullPointerException();
         }else if(obtainedArray.length < counter){
             arrayToReturn = (T[]) new Object[counter];

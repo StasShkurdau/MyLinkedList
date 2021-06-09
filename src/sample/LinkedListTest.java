@@ -1,5 +1,7 @@
 package sample;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedListTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void add() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         int newData1 = 10;
@@ -21,7 +23,7 @@ class LinkedListTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testAdd() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for(int i = 1; i<= 10; i++) {
@@ -35,7 +37,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.get(index2), newData2);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void addAllTest() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         int data1 = 1, data2 = 2, data3 = 3;
@@ -46,7 +48,7 @@ class LinkedListTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testAddAll() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         ArrayList<Integer> arrayListToRetain = new ArrayList<>();
@@ -63,7 +65,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.size(), counterEqualObjects);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testAddAll1() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         ArrayList<Integer> arrayList = new ArrayList<>();
@@ -77,7 +79,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.get(1), 66);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void clear() {
         LinkedList<String> linkedListToTest = new <String>LinkedList<String>();
         linkedListToTest.addAll("rfsrfsf", "srfewes", "fesfsefs", "hyuugmnb");
@@ -85,7 +87,7 @@ class LinkedListTest {
         assertTrue(linkedListToTest.isEmpty());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void retainAll() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         ArrayList<Integer> arrayListToRetain = new ArrayList<>();
@@ -105,7 +107,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.size(), counterEqualObjects);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void removeAll() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         ArrayList<Integer> arrayListToRetain = new ArrayList<Integer>();
@@ -120,7 +122,7 @@ class LinkedListTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void addFirst() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         linkedListToTest.addAll(2, 3, 4, 5, 6);
@@ -129,7 +131,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.get(1), newFirstElement);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void addLast() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -140,7 +142,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.get(linkedListToTest.size()), newData);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void get() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -152,7 +154,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.get(index3), index3);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void set() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -168,7 +170,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.get(index3), data3);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setFirst() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -179,7 +181,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.getFirst(), newData);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setLast() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -190,7 +192,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.getLast(), newData);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void remove() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -201,7 +203,7 @@ class LinkedListTest {
         assertFalse(linkedListToTest.contains(removeData));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void lastIndexOf() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -211,7 +213,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.lastIndexOf(index), index);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void listIterator() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for(int i = 1; i<= 20; i++) {
@@ -225,13 +227,14 @@ class LinkedListTest {
         assertEquals(llIterator.previous(), 88);
         assertEquals(llIterator.previous(), 1);
         assertEquals(llIterator.next(), 88);
+        assertEquals(llIterator.next(), 2);
         llIterator.remove();
-        assertEquals(llIterator.previous(), 1);
         llIterator.set(66);
-        assertEquals(llIterator.next(), 66);
+        llIterator.next();
+        assertEquals(llIterator.previous(), 66);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testListIterator() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for(int i = 1; i<= 20; i++) {
@@ -252,7 +255,7 @@ class LinkedListTest {
         assertEquals(llIterator.next(), 66);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void subList() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         List arrayList;
@@ -265,7 +268,7 @@ class LinkedListTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getFirst() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         int firstElement = 10;
@@ -275,7 +278,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.getFirst(), firstElement);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getLast() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         int lastElement = 10;
@@ -285,7 +288,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.getLast(),lastElement);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void indexOf() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -295,7 +298,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.lastIndexOf(index), index);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testToString() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         List<Integer> arrayList = new java.util.LinkedList<Integer>();
@@ -306,7 +309,7 @@ class LinkedListTest {
         assertEquals(linkedListToTest.toString(),arrayList.toString());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testClone() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         LinkedList<Integer> linkedListToTest2 = new LinkedList<Integer>();
@@ -320,7 +323,7 @@ class LinkedListTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void size() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         assertEquals(linkedListToTest.size(), 0);
@@ -328,13 +331,13 @@ class LinkedListTest {
         assertEquals(linkedListToTest.size(), 1);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isEmpty() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         assertTrue(linkedListToTest.isEmpty());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void contains() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -344,7 +347,7 @@ class LinkedListTest {
         assertFalse(linkedListToTest.contains(88));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void iterator() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -355,7 +358,7 @@ class LinkedListTest {
         assertEquals(llIterator.next(), 2);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void toArray() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         int arrayLenght = 10;
@@ -369,7 +372,7 @@ class LinkedListTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testRemove() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         for (int i = 1; i <= 10; i++) {
@@ -380,7 +383,7 @@ class LinkedListTest {
         assertFalse(linkedListToTest.contains(removeData));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void containsAll() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         List<Integer> arrayList = new java.util.LinkedList<>();
@@ -395,7 +398,7 @@ class LinkedListTest {
         assertFalse(linkedListToTest.containsAll(arrayList));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testToArray() {
         LinkedList<Integer> linkedListToTest = new LinkedList<Integer>();
         int arrayLenght = 10;
