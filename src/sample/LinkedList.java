@@ -216,9 +216,9 @@ public class LinkedList<T> implements List<T> {
         if(isNull(collection)){
             throw new NullPointerException();
         }
-        T collectionToArray[] = (T[]) collection.toArray();
+        T arrayFromCollection[] = (T[]) collection.toArray();
         for (int indexOfIteration = 0, indexToAdd = index; indexOfIteration < collection.size(); indexOfIteration++, indexToAdd++) {
-            add(indexToAdd,collectionToArray[indexOfIteration]);
+            add(indexToAdd,arrayFromCollection[indexOfIteration]);
         }
         return true;
     }
@@ -272,7 +272,6 @@ public class LinkedList<T> implements List<T> {
         tail = newNode;
         counter++;
     }
-
 
     public T get(int index){
         if(0 < index && index <= counter){
@@ -391,17 +390,17 @@ public class LinkedList<T> implements List<T> {
     @Override
     public String toString(){
         Node nextLink = head;
-        String returnString = "[";
+        StringBuilder returnString = new StringBuilder("[");
 
         for(int index = 1; index <= counter; index++){
-            returnString += nextLink.data.toString();
+            returnString.append(nextLink.data.toString());
             if(index < counter) {
-                returnString += ", ";
+                returnString.append(", ");
             }
             nextLink = nextLink.next;
         }
-        returnString += "]";
-        return returnString;
+        returnString.append("]");
+        return returnString.toString();
     }
 
     public LinkedList clone(){
@@ -478,14 +477,14 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection collection){
-        int counterOfContainsElement = 0;
+        int counterOfContains = 0;
         Object collectionToArray[] = collection.toArray();
         for(int index = 0; index < collectionToArray.length; index++){
             if(contains(collectionToArray[index])){
-                counterOfContainsElement++;
+                counterOfContains++;
             }
         }
-        return counterOfContainsElement == collection.size();
+        return counterOfContains == collection.size();
     }
 
     @Override
